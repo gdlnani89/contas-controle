@@ -11,10 +11,28 @@ export const Container = styled.main`
   }
 `;
 
-export const H2 = styled.h2`
+export const UlContainer = styled.div`
+position: fixed;
+bottom: 0;
+width: 100%;
 text-align:center;
+margin-bottom: 10px;
+ul{
+  list-style: none;
+  background: orange;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  border-radius: 8px;
+}
   @media (max-width: 630px) {
-    position: fixed;
+    margin-bottom: 45px;
+    ul{
+    font-size: 20px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 0;
+    }
   }
 `;
 
@@ -70,5 +88,58 @@ export const Tabela = styled.table`
   }
   @media (max-width: 630px) {
     display: none;
+  }
+`;
+
+export const LiDonativos = styled.ul`
+display: none;
+  @media (max-width: 630px){
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li{
+      display: flex;
+      align-items: center;
+      width: 90%;
+      background: #888888;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      position: relative;
+
+      &:last-child{
+      margin-bottom: 120px;
+      }
+      button{
+        border: 0;
+        position: absolute;
+        background: transparent;
+        right: -10px;
+      }
+    }
+    .data{
+      flex: 1;
+      text-align: center;
+      border-radius: 4px 0 0 4px;
+      background: #373433;
+      color: white;
+    }
+    .data p{
+      padding:5px 10px;
+    }
+    .donativos{
+      flex: 3;
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .donativos div{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
