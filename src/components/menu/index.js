@@ -8,7 +8,7 @@ export default function Header() {
       <Nav>
         <ul>
           <li>
-            <LinkH to="/">Donativos</LinkH>
+            <LinkH to="/donativos">Donativos</LinkH>
           </li>
           <li>
             <LinkH to="/gastos">Gastos</LinkH>

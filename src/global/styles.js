@@ -10,6 +10,7 @@ export const Global = createGlobalStyle`
   body, #root {
     background-color: #f8f8f7;
     font-family: WTMannaSans,Arial,"Arial Unicode MS",sans-serif;
+    height: 100vh;
   }
 
 `;
@@ -48,9 +49,8 @@ export const ValorG = styled(DiaG)`
 `;
 
 export const Data = styled.input`
-  height: 42px;
+  height: 30px;
   font-size: 20px;
-  padding: 4px;
   margin-right: 4px;
   @media (max-width: 630px) {
     width: 80%;
@@ -66,6 +66,21 @@ export const Nome = styled(Data)`
 
 export const Valor = styled(Data)`
   width: 100px;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &::placeholder{
+      font-size: 14px;
+    }
+  @media (max-width: 630px){
+    
+    text-align:center;
+    &::placeholder{
+      font-size: 20px;
+    }
+  }
 `;
 export const Add = styled.button`
   background-color: #30527f;

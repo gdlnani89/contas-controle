@@ -5,6 +5,11 @@ export const Container = styled.main`
   flex-direction: column;
   margin: auto;
   justify-content: center;
+  @media (max-width: 630px){
+    border-top: 1px solid #3734334f;
+    padding-top: 30px;
+    margin-top: -38px;
+  }
 
   h4 {
     text-align: center;
@@ -17,18 +22,19 @@ bottom: 0;
 width: 100%;
 text-align:center;
 margin-bottom: 10px;
+
 ul{
   list-style: none;
-  background: orange;
+  background: #ffcc6f;
   margin: auto;
-  width: 50%;
+  width: 35%;
   padding: 10px;
   border-radius: 8px;
+  box-shadow: 0px 0 4px -2px black;
 }
   @media (max-width: 630px) {
     margin-bottom: 45px;
     ul{
-    font-size: 20px;
     width: 100%;
     padding: 10px;
     border-radius: 0;
@@ -44,6 +50,7 @@ export const Form = styled.form`
   margin: 10px 0;
   button {
     margin: 10px;
+    box-shadow: 0 0 2px 0px #373433;
   }
   @media (max-width: 630px) {
     flex-direction: column;
@@ -76,15 +83,15 @@ export const Tabela = styled.table`
   margin: auto;
   text-align: center;
   thead {
-    font-size: 24px;
+    font-size: 20px;
   }
   tfoot {
     background: lightgray;
     border: 1px solid black;
-    font-size: 25px;
+    font-size: 20px;
   }
   th {
-    padding: 10px;
+    padding: 0 10px;
   }
   @media (max-width: 630px) {
     display: none;
@@ -92,22 +99,20 @@ export const Tabela = styled.table`
 `;
 
 export const LiDonativos = styled.ul`
-display: none;
-  @media (max-width: 630px){
-
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     li{
       display: flex;
+      flex-direction: column;
       align-items: center;
-      width: 90%;
+      min-width: 50%;
       background: #888888;
       border-radius: 4px;
       margin-bottom: 10px;
       position: relative;
-
+      box-shadow: 0 0 5px black;
       &:last-child{
       margin-bottom: 120px;
       }
@@ -115,13 +120,16 @@ display: none;
         border: 0;
         position: absolute;
         background: transparent;
-        right: -10px;
+        right: 2px;
+        cursor: pointer;
+        outline: none;
       }
     }
     .data{
-      flex: 1;
+      display: flex;
+      width: 100%;
       text-align: center;
-      border-radius: 4px 0 0 4px;
+      border-radius: 4px;
       background: #373433;
       color: white;
     }
@@ -129,7 +137,8 @@ display: none;
       padding:5px 10px;
     }
     .donativos{
-      flex: 3;
+      width: 100%;
+      padding: 5px;
       border-radius: 0 4px 4px 0;
       display: flex;
       align-items: center;
@@ -137,9 +146,16 @@ display: none;
     }
     .donativos div{
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
     }
-  }
+    .donativos div p:nth-child(2){
+      font-weight: bold;
+    }
+    /* @media (max-width: 630px){
+      .donativos div{
+        flex-direction: row;
+      }
+    } */
 `;

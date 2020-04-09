@@ -8,6 +8,7 @@ export const Container = styled.header`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  box-shadow: 0 0 3px 0px #e36600;
   h1 {
     color: #fff;
     background-color: #e36600;
@@ -22,6 +23,7 @@ export const Container = styled.header`
     position: fixed;
     bottom: 0;
     width: 100%;
+    box-shadow: 0px 1px 4px 2px black;
   }
 `;
 

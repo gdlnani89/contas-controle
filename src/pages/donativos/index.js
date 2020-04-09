@@ -6,7 +6,7 @@ import { Data, Valor } from "../../global/styles";
 
 import { formata } from "../../utils/helper";
 
-import {MdCancel} from 'react-icons/md'
+import {MdClose} from 'react-icons/md'
 
 export default function Donativos() {
 
@@ -46,17 +46,22 @@ export default function Donativos() {
   useEffect(()=> {
     localStorage.setItem('donativos', JSON.stringify(lancamento));
   }, [lancamento])
+
+  function excluirLancamento(donativoData){
+    const nvLista = lancamento.filter(p => p.dataReuniao !== donativoData)
+    setLancamento(nvLista)
+  }
   return (
     <>
       <Form>
-        <label>Reunião</label>
+        <label htmlFor="reuniao">Reunião</label>
         <Data
           id="reuniao"
           type="date"
           value={dataReuniao}
           onChange={e => setReuniao(e.target.value)}
         />
-        <label>Deposito</label>
+        <label htmlFor="deposito">Deposito</label>
         <Data
           id="deposito"
           type="date"
@@ -108,57 +113,6 @@ export default function Donativos() {
         </Add>
       </Form>
       <Container>
-        <Tabela>
-          <thead>
-            <tr key={"cabecalho"}>
-              <th>Dia</th>
-              <th>Depositado</th>
-              <th>Obra Mundial</th>
-              <th>Congregação</th>
-              <th>Reforma Betel</th>
-              <th>Depósito</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lancamento.map((i, id) => (
-              <tr key={id}>
-                <td>{i.dataReuniao.split('-')[2]+'/'+i.dataReuniao.split('-')[1]}</td>
-                <td>{i.dataDeposito.split('-')[2]+'/'+i.dataDeposito.split('-')[1]}</td>
-                <td>{formata(parseFloat(i.om))}</td>
-                <td>{formata(parseFloat(i.cong))}</td>
-                <td>{formata(parseFloat(i.reforma))}</td>
-                <td>
-                  {formata(
-                    parseFloat(i.om.replace(",", ".")) +
-                      parseFloat(i.cong.replace(",", ".")) +
-                      parseFloat(i.reforma.replace(",", "."))
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan="2">Total</td>
-              <td>
-                {/* OM */}
-                {formata(totalOm)}
-              </td>
-              <td>
-                {/* congregação */}
-                {formata(totalCong)}
-              </td>
-              <td>
-                {/* reforma betel */}
-                {formata(totalReforma)}
-              </td>
-              <td>
-                {/* depositos */}
-                {formata(totalDeposito)}
-              </td>
-            </tr>
-          </tfoot>
-        </Tabela>
         <LiDonativos>
             {lancamento.map((i,id)=>(
                 <li key={id}>
@@ -180,8 +134,8 @@ export default function Donativos() {
                       <p>{formata(parseFloat(i.reforma))}</p>
                     </div>
                   </div>
-                  <button>
-                    <MdCancel size="25px"/>
+                  <button onClick={() => excluirLancamento(i.dataReuniao)}>
+                    <MdClose size="25px" color="tomato"/>
                   </button>
                 </li>
             ))}
@@ -195,29 +149,13 @@ export default function Donativos() {
             <li>
               Congregação: {formata(totalCong)}
             </li>
+            <li>
+              Total: {formata(totalDeposito)}
+            </li>
           </ul>
         </UlContainer>
-        {/* <Add
-          onClick={e => {
-            e.preventDefault();
-            if (ano && mes) {
-              setPeriodo([
-                ...periodo,
-                {
-                  ano,
-                  mes,
-                  lancamento
-                }
-              ]);
-            } else {
-              alert("Ano e mês devem estar preenchido");
-            }
-            console.log(periodo);
-          }}
-        >
-          Salvar
-        </Add> */}
       </Container>
     </>
   );
 }
+
