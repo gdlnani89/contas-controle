@@ -1,0 +1,307 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+}
+.odd-row{
+    background-color: #00000018;
+}
+#ulmenu li{
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+footer input, #modalExtrato input{
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #3f51b5;
+    color: white;
+}
+#modalExtrato select{
+    border-radius: 5px;
+    background-color: #3f51b5;
+    color: white;
+}
+#modalExtrato p{
+    color: white;
+}
+footer p{
+    color: white;
+}
+/* #ulmenu li:hover{
+    background-color: #2949ff85;
+    background: radial-gradient(circle, rgba(0,121,255,1) 0%, rgba(255,255,255,0.1825105042016807) 100%);
+    color: yellow;
+} */
+ul{
+    list-style: none;
+}
+table{
+    border-collapse: collapse;
+}
+.show{
+    height: 35px;
+}
+.btn-shadown{
+    box-shadow: 0px 12px 20px -15px black;
+}
+.b-shadown-y{
+    box-shadow: 0px -4px 28px -2px rgba(0,0,0,0.68);
+
+}
+/* overflow */
+.overflow-auto	{overflow: auto;}
+.overflow-hidden	{overflow: hidden;}
+.overflow-clip	{overflow: clip;}
+.overflow-visible	{overflow: visible;}
+.overflow-scroll	{overflow: scroll;}
+.overflow-x-auto	{overflow-x: auto;}
+.overflow-y-auto	{overflow-y: auto;}
+.overflow-x-hidden	{overflow-x: hidden;}
+.overflow-y-hidden	{overflow-y: hidden;}
+.overflow-x-clip	{overflow-x: clip;}
+.overflow-y-clip	{overflow-y: clip;}
+.overflow-x-visible	{overflow-x: visible;}
+.overflow-y-visible	{overflow-y: visible;}
+.overflow-x-scroll	{overflow-x: scroll;}
+.overflow-y-scroll	{overflow-y: scroll;}
+/* position */
+.static	{position: static;}
+.fixed	{position: fixed;}
+.absolute	{position: absolute;}
+.relative	{position: relative;}
+.sticky	{position: sticky;}
+/* Top / Right / Bottom / Left */
+.top-n{
+    top: -50px;
+}
+.topBtn{
+    top: -60px;
+}
+.top-37{
+    top: 37px;
+}
+.top-0{ top: 0 }
+.top-1{ top: 1px }
+.top-5{ top: 5px }
+.left-0{ left: 0;}
+.bottom-0{ bottom: 0;}
+.right-0{ right: 0;}
+.right-2 { right: 2px;}
+/* z-indes */
+.z-50{z-index: 50;}
+/* tamanho */
+.w-full{
+    width: 100%;
+}
+.w-2{
+    width: 0.5rem;
+}
+.w-3{
+    width: 0.75rem;
+}
+.w-7{
+    width: 1.75rem;
+}
+.w-9{
+    width: 2.25rem;
+}
+.w-14{width: 3.5rem;} /* 56px */
+.w-16{
+    width: 4rem;
+}
+.w-28{
+    width: 7rem;
+}
+.h-full{
+    height: 100%;
+}
+.h-screen{height: 100vh;}
+/* padding */
+.p-1	{padding: 0.25rem;} /* 4px */
+.p-2	{padding: 0.5rem;} /* 8px */
+.px-2 {padding: 0 0.5rem;}
+/* margens */
+.m-auto{
+    margin: auto;
+}
+.m-1{
+    margin: 0.25rem; /* 4px */
+}
+.m-2{
+    margin: 0.5rem; /* 8px */
+}
+.mr-1{
+    margin-right: .25rem;
+}
+/* display */
+.flex{
+    display: flex;
+}
+.flex-col{
+    flex-direction: column;
+}
+.justify-center{
+    justify-content: center;
+}
+.justify-around{
+    justify-content: space-around;
+}
+.justify-between{
+    justify-content: space-between;
+}
+.items-center{
+    align-items: center;
+}
+.gap-0	{gap: 0px;}
+.gap-x-0	{column-gap: 0px;}
+.gap-y-0	{row-gap: 0px;}
+.gap-px	{gap: 1px;}
+.gap-x-px	{column-gap: 1px;}
+.gap-y-px	{row-gap: 1px;}
+.gap-05	{gap: 0.125rem;} /* 2px */
+.gap-x-05	{column-gap: 0.125rem;} /* 2px */
+.gap-y-05	{row-gap: 0.125rem;} /* 2px */
+.gap-1	{gap: 0.25rem;} /* 4px */
+.gap-x-1	{column-gap: 0.25rem;} /* 4px */
+.gap-y-1	{row-gap: 0.25rem;} /* 4px */
+.gap-15	{gap: 0.375rem;} /* 6px */
+.gap-x-15	{column-gap: 0.375rem;} /* 6px */
+.gap-y-15	{row-gap: 0.375rem;} /* 6px */
+.gap-2	{gap: 0.5rem;} /* 8px */
+.gap-x-2	{column-gap: 0.5rem;} /* 8px */
+.gap-y-2	{row-gap: 0.5rem;} /* 8px */
+.gap-25	{gap: 0.625rem;} /* 10px */
+.gap-x-25	{column-gap: 0.625rem;} /* 10px */
+.gap-y-25	{row-gap: 0.625rem;} /* 10px */
+.gap-3	{gap: 0.75rem;} /* 12px */
+.gap-x-3	{column-gap: 0.75rem;} /* 12px */
+.gap-y-3	{row-gap: 0.75rem;} /* 12px */
+.gap-35	{gap: 0.875rem;} /* 14px */
+.gap-x-35	{column-gap: 0.875rem;} /* 14px */
+.gap-y-35	{row-gap: 0.875rem; }/* 14px */
+.gap-4	{gap: 1rem;} /* 16px */
+.gap-x-4	{column-gap: 1rem;} /* 16px */
+.gap-y-4	{row-gap: 1rem;} /* 16px */
+.gap-5	{gap: 1.25rem; }/* 20px */
+.gap-x-5	{column-gap: 1.25rem;} /* 20px */
+.gap-y-5	{row-gap: 1.25rem; }/* 20px */
+.gap-6	{gap: 1.5rem;} /* 24px */
+.gap-x-6	{column-gap: 1.5rem;} /* 24px */
+.gap-y-6	{row-gap: 1.5rem;} /* 24px */
+.gap-7	{gap: 1.75rem;} /* 28px */
+.gap-x-7	{column-gap: 1.75rem;} /* 28px */
+.gap-y-7	{row-gap: 1.75rem;} /* 28px */
+.gap-8	{gap: 2rem;} /* 32px */
+
+/* borda  */
+.border-none{
+    border-style: none;
+}
+.border{
+    border-width: 1px;
+}
+.border-black{
+    border-color: black;
+}
+.border-solid{
+    border-style: solid;
+}
+.rounded{
+    border-radius: 0.25rem;
+}
+.rounded-50{
+    border-radius: 50%;
+}
+/* texto */
+.text-yellow{
+    color: yellow;
+}
+.text-white	{color: rgb(255 255 255);}
+.text-center{
+    text-align: center;
+}
+.text-lg{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+.text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.text-xs{
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+}	
+.font-sans{
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+/* background */
+.bg-transparent{
+    background-color: transparent;
+}
+.bg-white{
+    background-color: white;
+}
+.bg-black4{
+    background-color: rgba(0, 0, 0, 0.473);
+}
+.bg-gray{
+    background-color: gray;
+}
+.bg-azul{
+    background-color: #3f51b5;
+}
+.bg-laranja{
+    background-color: #ff5722;
+}
+.bg-red{
+    background-color: red;
+}
+.bg-gradient{
+    background: #396afc;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #2948ff, #396afc);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #2948ff, #396afc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+/* cursor */
+.cursor-pointer{
+    cursor: pointer;
+}
+table tbody tr:hover{
+    background-color: #3f51b586;
+}
+table tbody tr:active{
+    background-color: #ff5722;
+}
+.trativa{
+    background-color: darkblue;
+    color: white;
+}
+.slideIn{
+    animation-name: slideIn;
+    animation-duration: .2s;
+   }
+   @keyframes slideIn{
+    from{
+    bottom: -160px;
+   }
+    tô{
+    bottom: 0;
+   }
+   }
+.f-escondido{
+    bottom : -205px;
+}
+.cfooterShow{
+    bottom : 0;
+    transition: bottom .2s ease-in-out;
+}
