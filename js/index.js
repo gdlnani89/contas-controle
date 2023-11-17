@@ -1,7 +1,4 @@
 const dataAtual = new Date()
-const anoAtual = dataAtual.getFullYear()
-const mesAtual = dataAtual.getMonth()
-const diaAtual = dataAtual.getDate()
 
 new Vue({
     el: "#app",
