@@ -35,7 +35,6 @@ new Vue({
     },
     methods : {
         formatarNumero(numero){
-            console.log(numero);
             let [parteInteira, parteDecimal] = numero.split(',')
             parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             parteDecimal = parteDecimal ? ',' + parteDecimal.padEnd(2, '0') : ',00';
@@ -194,7 +193,6 @@ new Vue({
         saldoMes(){
             const totalDebitoArray = this.mapTipo('d')
             const totalCreditoArray = this.mapTipo('c')
-            console.log(totalCreditoArray);
             const totalDebito = this.totaisConta(totalDebitoArray)
             const totalCredito = this.totaisConta(totalCreditoArray)
             const saldo =  totalCredito - totalDebito

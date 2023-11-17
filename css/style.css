@@ -91,7 +91,7 @@ table{
 .sticky	{position: sticky;}
 /* Top / Right / Bottom / Left */
 .top-n{
-    top: -50px;
+    top: -55px;
 }
 .topBtn{
     top: -60px;
@@ -141,6 +141,7 @@ table{
 /* padding */
 .p-1	{padding: 0.25rem;} /* 4px */
 .p-2	{padding: 0.5rem;} /* 8px */
+.p-3	{padding: 0.75rem;} /* 12px */
 .px-2 {padding: 0 0.5rem;}
 /* margens */
 .m-auto{

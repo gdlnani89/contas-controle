@@ -30,8 +30,8 @@
                 </ul>
             </nav>
         </header>
-        <nav v-show="true" class="flex justify-around ">
-            <button class="p-1 bg-transparent border-none" @click="mesAnterior">
+        <nav v-show="true" class="flex justify-around" style="margin-top: 8px;">
+            <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesAnterior">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                 </svg>
@@ -40,13 +40,13 @@
                 <p class="capitalize">{{mesString[mesIndice]}}</p>
                 <p>{{ano}}</p>
             </div>
-            <button class="p-1 bg-transparent border-none" @click="mesProximo">
+            <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesProximo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>
         </nav>
-        <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 10px;">
+        <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 8px;">
             <thead class="bg-gradient text-white">
                 <th>Dia</th>
                 <th>Descrição</th>
@@ -68,7 +68,7 @@
         </section>
         <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
             <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
-                <button @click="footerShow" v-show="!showFooter" class="mr-1 p-2 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                <button @click="footerShow" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                       </svg>
@@ -76,7 +76,7 @@
                 <button 
                     @click="addLancamento"
                     v-show="showFooter" 
-                    class="mr-1 p-2 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                    class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
                         <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
                     </svg>
