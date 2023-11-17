@@ -46,7 +46,7 @@
                 </svg>
             </button>
         </nav>
-        <table class="w-full">
+        <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 10px;">
             <thead class="bg-gradient text-white">
                 <th>Dia</th>
                 <th>Descrição</th>
@@ -55,13 +55,17 @@
             </thead>
             <tbody>
                 <tr v-bind:id="lacamento.id" @click="selecionaElemento" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
-                    <td style="width: 30px;">{{lacamento.dia}}</td>
+                    <td style="width: 40px;">{{lacamento.dia}}</td>
                     <td>{{lacamento.descricao}}</td>
                     <td style="width: 40px;">{{lacamento.tipo}}</td>
                     <td>{{formatarNumero(lacamento.valor)}}</td>
                 </tr>
             </tbody>
         </table>
+        <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1" style="margin-top: 10px;">
+            <span>Saldo</span>
+            <p>R$ <strong>{{formatarNumero(saldo)}}</strong></p>
+        </section>
         <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
             <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
                 <button @click="footerShow" v-show="!showFooter" class="mr-1 p-2 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
@@ -92,7 +96,7 @@
             <p>
                 <button style="width: 50px;" class="p-2" @click="decrementarDia">-</button>
                 Dia
-                <input v-model="dia" type="number" style="width: 40px;" maxlength="2">
+                <input v-model="dia" type="number" style="width: 50px;" maxlength="2">
                 <button style="width: 50px;" class="p-2" @click="incrementarDia">+</button>
             </p>
             <p>
@@ -127,7 +131,7 @@
                           </svg>
                     </button>
                     Dia
-                    <input v-model="dia" class="p-1" type="number" style="width: 40px;" maxlength="2">
+                    <input v-model="dia" class="p-1" type="number" style="width: 50px;" maxlength="2">
                     <button class="flex items-center justify-center p-2 border-black rounded bg-transparent" style="width: 50px;" class="p-2" @click="incrementarDia">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>

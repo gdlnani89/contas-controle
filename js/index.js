@@ -26,30 +26,16 @@ new Vue({
         descricao : '',
         valor : '',
         tipo : 'c',
-        totalOM : '0,00',
-        totalCong : '0,00',
-        totalCongPix : '0,00',
-        totalCongJW : '0,00',
-        totalSaidas : '0,00',
-        totalOperacional : '0,00',
+        saldo : 0,
         contas : [],
         contaSelecionada : [],
-        showTabela: false,
-        showListaDescrisao : false,
-        showIncluir : false,
-        btnMaisIncluir : true,
-        btnMenosIncluir: false,
-        btnEditar: true,
-        btnVoltar: false,
-        showTotal : false,
-        btnMaisTotal : true,
-        btnMenosTotal: false,
+        showTabela: true,
         showFooter : false,
-        habilitaBtnEditar: true,
-        showModalExtrato : false
+        showModalExtrato : false,
     },
     methods : {
         formatarNumero(numero){
+            console.log(numero);
             let [parteInteira, parteDecimal] = numero.split(',')
             parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             parteDecimal = parteDecimal ? ',' + parteDecimal.padEnd(2, '0') : ',00';
@@ -66,13 +52,11 @@ new Vue({
             if(this.mesIndice <= 0 ){
                 this.mesIndice = 11
                 this.ano--  
-                this.atualizaConta()
-                this.clearData()
             }else{
                 this.mesIndice--
-                this.atualizaConta()
-                this.clearData()
             }  
+            this.atualizaConta()
+            this.clearData()
         },
         mesProximo(){
             if(this.mesIndice >= 11){
@@ -80,8 +64,9 @@ new Vue({
                 this.ano++
             }else{
                 this.mesIndice++
-                this.atualizaConta()
             }
+            this.atualizaConta()
+            this.clearData()
         },
         footerShow(){
             this.showFooter = true
@@ -161,8 +146,7 @@ new Vue({
         },
         atualizaConta(){
             this.filtrarLista()
-
-
+            this.saldo = this.saldoMes()
         },
         parseValor(valor){
             if(valor.includes('.')) valor.replace('.','')
@@ -206,6 +190,15 @@ new Vue({
         alteraElemento(){
             this.addLancamento()
             this.excluirElemento()
+        },
+        saldoMes(){
+            const totalDebitoArray = this.mapTipo('d')
+            const totalCreditoArray = this.mapTipo('c')
+            console.log(totalCreditoArray);
+            const totalDebito = this.totaisConta(totalDebitoArray)
+            const totalCredito = this.totaisConta(totalCreditoArray)
+            const saldo =  totalCredito - totalDebito
+            return saldo.toFixed(2).replace('.',',')
         }
     },
     mounted(){
