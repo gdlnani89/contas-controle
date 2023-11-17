@@ -37,7 +37,7 @@
                 </svg>
             </button>
             <div class="m-2 flex flex-col justify-center items-center"> 
-                <p class="capitalize">{{mesString[mesIndice]}}</p>
+                <p class="capitalize font-bold">{{mesString[mesIndice]}}</p>
                 <p>{{ano}}</p>
             </div>
             <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesProximo">
@@ -46,6 +46,10 @@
                 </svg>
             </button>
         </nav>
+        <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
+            <span class="m-1">Saldo final</span>
+            <p class="m-1">R$ <strong>{{formatarNumero(saldo)}}</strong></p>
+        </section>
         <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 8px;">
             <thead class="bg-gradient text-white">
                 <th>Dia</th>
@@ -62,10 +66,6 @@
                 </tr>
             </tbody>
         </table>
-        <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1" style="margin-top: 10px;">
-            <span>Saldo</span>
-            <p>R$ <strong>{{formatarNumero(saldo)}}</strong></p>
-        </section>
         <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
             <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
                 <button @click="footerShow" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
@@ -87,7 +87,7 @@
                 v-show="showFooter" 
                 class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>

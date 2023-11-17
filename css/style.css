@@ -4,6 +4,9 @@
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     box-sizing: border-box;
 }
+button.b-shadown-y2:active{
+    box-shadow: none;
+}
 .odd-row{
     background-color: #00000018;
 }
@@ -94,7 +97,7 @@ table{
     top: -55px;
 }
 .topBtn{
-    top: -60px;
+    top: -65px;
 }
 .top-37{
     top: 37px;
@@ -264,6 +267,9 @@ table{
     font-size: 0.75rem; /* 12px */
     line-height: 1rem; /* 16px */
 }	
+.font-bold{
+    font-weight: 700;
+}
 .font-sans{
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
