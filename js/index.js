@@ -3,34 +3,6 @@ const anoAtual = dataAtual.getFullYear()
 const mesAtual = dataAtual.getMonth()
 const diaAtual = dataAtual.getDate()
 
-Vue.component('dia-altera', {
-    props: ['variavel'],
-    data: function () {
-      return {
-        // Remova a referência a this.dataAtual
-        dia: new Date().getDate()
-      };
-    },
-    methods: {
-      // Adicione métodos para incrementar e decrementar o valor
-      incrementarDia: function () {
-        this.variavel++;
-      },
-      decrementarDia: function () {
-        this.variavel--;
-      }
-    },
-    template: `
-      <p>
-          <button style="width: 50px;" class="p-2" @click="decrementarDia">-</button>
-          Dia
-          <input v-model="variavel" class="p-1" type="number" style="width: 40px;" maxlength="2">
-          <button style="width: 50px;" class="p-2" @click="incrementarDia">+</button>
-      </p>
-    `
-  });
-  
-
 new Vue({
     el: "#app",
     data : {

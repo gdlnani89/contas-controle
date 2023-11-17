@@ -8,9 +8,22 @@
     background-color: #00000018;
 }
 #ulmenu li{
-    padding: 10px;
-    cursor: pointer;
     font-weight: bold;
+}
+#ulmenu li:not(:last-child){
+    border-bottom: 1px solid black;
+}
+#ulmenu li button{
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: transparent;
+    width: 100%;
+}
+#ulmenu li button:active{
+    background: rgb(0,18,255);
+background: radial-gradient(circle, rgba(0,18,255,1) 0%, rgba(255,255,255,0.1825105042016807) 100%);
 }
 footer input, #modalExtrato input{
     border: none;
