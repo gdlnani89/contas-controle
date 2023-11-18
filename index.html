@@ -22,11 +22,11 @@
                     {{btnHeader}}
                 </button>
                 <ul id="ulmenu" v-show="showMenu" class="flex flex-col absolute right-0 z-50 bg-white rounded b-shadown-y text-center font-sans top-37">
-                    <li><button @click.stop="selecinaBtnHeader">Extrato</button></li>
-                    <li><button @click.stop="selecinaBtnHeader">Aplicações</button></li>
-                    <li><button @click.stop="selecinaBtnHeader">Empréstimos</button></li>
-                    <li><button @click.stop="selecinaBtnHeader">Patrimonio</button></li>
-                    <li><button @click.stop="selecinaBtnHeader">Totais</button></li>
+                    <li><button @click.stop="selecionaBtnHeader">Extrato</button></li>
+                    <li><button @click.stop="selecionaBtnHeader">Aplicações</button></li>
+                    <li><button @click.stop="selecionaBtnHeader">Empréstimos</button></li>
+                    <li><button @click.stop="selecionaBtnHeader">Patrimonio</button></li>
+                    <li><button @click.stop="selecionaBtnHeader">Totais</button></li>
                 </ul>
             </nav>
         </header>
@@ -164,7 +164,8 @@
         </div>
         </div>
         <div v-if="showAplicacao" class="flex flex-col justify-stretch items-center">
-            <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido"><div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
+            <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
+                <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
                 
                 <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
@@ -198,20 +199,33 @@
                     Características
                     <input type="text" id="descricaoAplicacao" v-model="descricaoAplicacao">
                 </p>
-                <p style="margin-bottom: 20px;">
+                <p>
                     Valor
                     <input type="text" id="valorAplicacao" v-model="valorAplicacao">
                 </p>
+                <p style="margin-bottom: 8px;">
+                    Data aplicação
+                    <input type="date" name="" id="" v-model="dataAplicacao">
+                </p>
             </footer>
-            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
+            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded text-xl" style="margin-top: 10px;">
                 <span class="m-1">Total Aplicado</span>
                 <p class="m-1">R$ <strong>{{formatarNumero(totalAplicados)}}</strong></p>
             </section>
             <ul class="m-2 w-90 flex flex-col gap-5">
-                <li v-for="aplicacao in aplicacoes" class="p-2 b-shadown-y2 rounded text-xl text-center">
+                <li
+                    v-bind:id="aplicacao.id"
+                    v-for="aplicacao in aplicacoes" 
+                    class="p-2 b-shadown-y2 rounded text-xl text-center relative">
                     <strong>{{aplicacao.nome}}</strong>  <br>
-                    Característica : {{aplicacao.descricao}} <br>
-                    Valor : R$ {{formatarNumero(aplicacao.valor)}}
+                    Característica : {{aplicacao.descricao}}<br>
+                    Valor : R$ {{formatarNumero(aplicacao.valor)}} <br>
+                    Data da aplicação : {{formatarDataParaString(aplicacao.data) || 'Sem data cadastrada'}}
+                    <div class="absolute right-0 top-0 flex flex-col">
+                        <button @click="deletarAplicacao" 
+                            class="border-none bg-transparent cursor-pointer m-1 trash">
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>

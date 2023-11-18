@@ -41,7 +41,8 @@ new Vue({
         nomeAplicacao : '',
         descricaoAplicacao : '',
         valorAplicacao : '',
-        totalAplicados : '0,00'
+        totalAplicados : '0,00',
+        dataAplicacao : ''
     },
     methods : {
         formatarNumero(numero){
@@ -51,10 +52,10 @@ new Vue({
             return parteInteira + parteDecimal;
         },
         incrementarDia(){
-            this.dia++
+            this.dia == '31' ? this.dia = 1 : this.dia++ 
         },
         decrementarDia(){
-            this.dia--
+            this.dia == 1 ? this.dia = 31 : this.dia--
         },
         mesAnterior(){
             // this.mesIndice--
@@ -111,7 +112,8 @@ new Vue({
                 id : id,
                 nome : this.nomeAplicacao,
                 descricao: this.descricaoAplicacao,
-                valor : this.valorAplicacao
+                valor : this.valorAplicacao,
+                data : this.dataAplicacao
             }
         },
         atualizaLs(item){
@@ -232,7 +234,18 @@ new Vue({
                 }
             })
         },
-        selecinaBtnHeader(e){
+        deletarAplicacao(e){
+            const target = e.target.parentElement.parentElement
+            console.log(target);
+            const id = target.getAttribute('id')
+            this.idAplicacao = id
+            const aplicacoesUpdate =
+                this.aplicacoes.filter(item => item.id !== this.idAplicacao)
+            this.aplicacoes = aplicacoesUpdate
+            this.atualizaLs('aplicacoes')
+            this.atualizaAplicacoes()
+        },
+        selecionaBtnHeader(e){
             const target = e.target
             const innerTextBtn = target.innerText
             this.btnHeader = innerTextBtn
@@ -259,6 +272,11 @@ new Vue({
             const totalCredito = this.totaisConta(totalCreditoArray)
             const saldo =  totalCredito - totalDebito
             return saldo.toFixed(2).replace('.',',')
+        },
+        formatarDataParaString(data) {
+            const [ano,mes,dia] = data.split('-')
+
+            return `${dia}/${mes}/${ano}`;
         }
     },
     mounted(){

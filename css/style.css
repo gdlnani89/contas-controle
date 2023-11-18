@@ -10,6 +10,13 @@ button.b-shadown-y2:active{
 .odd-row{
     background-color: #00000018;
 }
+.trash{
+    width: 26px;
+    height: 26px;
+    background-image: url('../icons/trash.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
 #ulmenu li{
     font-weight: bold;
 }
@@ -335,6 +342,9 @@ table tbody tr:active{
    }
 .f-escondido{
     bottom : -205px;
+}
+.f-escondidoAp{
+    bottom : -235px;
 }
 .cfooterShow{
     bottom : 0;
