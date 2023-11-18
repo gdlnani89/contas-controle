@@ -29,9 +29,19 @@ new Vue({
         saldo : 0,
         contas : [],
         contaSelecionada : [],
+        btnHeader : 'Extrato',
+        showExtrato: true,
         showTabela: true,
         showFooter : false,
         showModalExtrato : false,
+        aplicacoes : [],
+        showAplicacao : false,
+        showFooterAplicacao : false,
+        idAplicacao : '',
+        nomeAplicacao : '',
+        descricaoAplicacao : '',
+        valorAplicacao : '',
+        totalAplicados : '0,00'
     },
     methods : {
         formatarNumero(numero){
@@ -94,8 +104,19 @@ new Vue({
                 tipo : this.tipo
             }
         },
-        atualizaLs(){
-            localStorage.setItem('coincontrol', JSON.stringify(this.contas))
+        aplicacao(){
+            const id = this.gerarId()
+
+            return{
+                id : id,
+                nome : this.nomeAplicacao,
+                descricao: this.descricaoAplicacao,
+                valor : this.valorAplicacao
+            }
+        },
+        atualizaLs(item){
+            if(item === 'coincontrol')localStorage.setItem(item, JSON.stringify(this.contas))
+            if(item === 'aplicacoes')localStorage.setItem(item, JSON.stringify(this.aplicacoes))
         },
         addLancamento(){
             if(!this.descricao){
@@ -108,11 +129,32 @@ new Vue({
             }
             const dado = this.lancamento()
             this.contas.push(dado)
-            this.atualizaLs()
+            this.atualizaLs('coincontrol')
             this.atualizaConta()
             this.descricao = ''
             this.valor = ''
             this.tipo = 'c'
+        },
+        addAplicacao(){
+            if(!this.nomeAplicacao){
+                document.getElementById('nomeAplicacao').focus()
+                return
+            }
+            if(!this.descricaoAplicacao){
+                document.getElementById('descricaoAplicacao').focus()
+                return
+            }
+            if(!this.valorAplicacao){
+                document.getElementById('valorAplicacao').focus()
+                return
+            }
+            const dado = this.aplicacao()
+            this.aplicacoes.push(dado)
+            this.atualizaLs('aplicacoes')
+            this.atualizaAplicacoes()
+            this.descricaoAplicacao = ''
+            this.valorAplicacao = ''
+            this.nomeAplicacao = ''  
         },
         filtrarLista(){
             if(this.contas.length){
@@ -143,9 +185,21 @@ new Vue({
 
             return soma.toFixed(2)
         },
+        totalAplicado(){
+            const arrayValor =
+                this.aplicacoes.map(item => parseFloat(item.valor.replace(',','.')))
+            
+            const soma = this.totaisConta(arrayValor)
+
+            return soma.replace('.',',')
+        },
         atualizaConta(){
             this.filtrarLista()
             this.saldo = this.saldoMes()
+        },
+        atualizaAplicacoes(){
+            this.aplicacoes = JSON.parse(localStorage.getItem('aplicacoes')) || []
+            this.totalAplicados = this.totalAplicado()
         },
         parseValor(valor){
             if(valor.includes('.')) valor.replace('.','')
@@ -163,7 +217,7 @@ new Vue({
             this.showModalExtrato = false
             this.showFooter = false
         },
-        selecionaElemento(e){
+        selecionaTr(e){
             this.showFooter = false
             this.habilitaBtnEditar = true
             const target = e.target.parentElement
@@ -178,10 +232,18 @@ new Vue({
                 }
             })
         },
+        selecinaBtnHeader(e){
+            const target = e.target
+            const innerTextBtn = target.innerText
+            this.btnHeader = innerTextBtn
+            this.btnHeader !== 'Extrato' ? this.showExtrato = false : this.showExtrato = true
+            this.btnHeader === 'Aplicações' ? this.showAplicacao = true : this.showAplicacao = false
+            this.showMenu = false
+        },
         excluirElemento(){
             const novaLista = this.contas.filter(item => item.id !== this.id)
             this.contas = novaLista
-            this.atualizaLs()
+            this.atualizaLs('coincontrol')
             this.atualizaConta()
             this.clearData()
             this.showModalExtrato = false
@@ -203,5 +265,6 @@ new Vue({
         this.mes = this.mesString[this.mesIndice]
         this.contas = JSON.parse(localStorage.getItem('coincontrol')) || []
         this.atualizaConta()
+        this.atualizaAplicacoes()
     }
 })

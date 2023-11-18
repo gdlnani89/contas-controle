@@ -19,123 +19,125 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-caret-down-fill m-2" viewBox="0 0 16 16">
                         <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                     </svg>
-                    Extrato
+                    {{btnHeader}}
                 </button>
                 <ul id="ulmenu" v-show="showMenu" class="flex flex-col absolute right-0 z-50 bg-white rounded b-shadown-y text-center font-sans top-37">
-                    <li><button>Extratos</button></li>
-                    <li><button>Aplicações</button></li>
-                    <li><button>Empréstimos</button></li>
-                    <li><button>Patrimonio</button></li>
-                    <li><button>Totais</button></li>
+                    <li><button @click.stop="selecinaBtnHeader">Extrato</button></li>
+                    <li><button @click.stop="selecinaBtnHeader">Aplicações</button></li>
+                    <li><button @click.stop="selecinaBtnHeader">Empréstimos</button></li>
+                    <li><button @click.stop="selecinaBtnHeader">Patrimonio</button></li>
+                    <li><button @click.stop="selecinaBtnHeader">Totais</button></li>
                 </ul>
             </nav>
         </header>
-        <nav v-show="true" class="flex justify-around" style="margin-top: 8px;">
-            <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesAnterior">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                </svg>
-            </button>
-            <div class="m-2 flex flex-col justify-center items-center"> 
-                <p class="capitalize font-bold">{{mesString[mesIndice]}}</p>
-                <p>{{ano}}</p>
-            </div>
-            <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesProximo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-            </button>
-        </nav>
-        <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
-            <span class="m-1">Saldo final</span>
-            <p class="m-1">R$ <strong>{{formatarNumero(saldo)}}</strong></p>
-        </section>
-        <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 8px;">
-            <thead class="bg-gradient text-white">
-                <th>Dia</th>
-                <th>Descrição</th>
-                <th>Tipo</th>
-                <th>Valor</th>
-            </thead>
-            <tbody>
-                <tr v-bind:id="lacamento.id" @click="selecionaElemento" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
-                    <td style="width: 40px;">{{lacamento.dia}}</td>
-                    <td>{{lacamento.descricao}}</td>
-                    <td style="width: 40px;">{{lacamento.tipo}}</td>
-                    <td>{{formatarNumero(lacamento.valor)}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
-            <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
-                <button @click="footerShow" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                </button>
-                <button 
-                    @click="addLancamento"
-                    v-show="showFooter" 
-                    class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
-                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+        <div v-if="showExtrato">
+            <nav v-show="true" class="flex justify-around" style="margin-top: 8px;">
+                <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesAnterior">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
                 </button>
-            </div>
-            <button
-                @click="footerClose"
-                v-show="showFooter" 
-                class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-            </button>
-            
-            <h4 class="m-1">Adicionar</h4>
-            <p>
-                <button style="width: 50px;" class="p-2" @click="decrementarDia">-</button>
-                Dia
-                <input v-model="dia" type="number" style="width: 50px;" maxlength="2">
-                <button style="width: 50px;" class="p-2" @click="incrementarDia">+</button>
-            </p>
-            <p>
-                Descrição
-                <input id="descricao" v-model="descricao" type="text">
-            </p>
-            <p>
-                Valor
-                <input id="valor" v-model="valor" type="text">
-            </p>
-            <p class="flex gap-5" style="margin-bottom: 6px;">
-                <label for="credito">
-                    <input id="credito" type="radio" value="c" name="tipo" v-model="tipo">
-                    Crédito
-                </label>
-                <label for="debito">
-                    <input id="debito" type="radio" value="d" name="tipo" v-model="tipo">
-                    Débito
-                </label>
-            </p>
-        </footer>
-        <!-- Modal para editar lançamento -->
-        <div id="modalExtrato" v-show="showModalExtrato" class="fixed w-full top-0 left-0 bg-black4 h-full flex justify-center items-center z-50">
-            <div class="flex flex-col items-center gap-2 p-2 border border-black border-solid bg-gradient rounded"
+                <div class="m-2 flex flex-col justify-center items-center"> 
+                    <p class="capitalize font-bold">{{mesString[mesIndice]}}</p>
+                    <p>{{ano}}</p>
+                </div>
+                <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesProximo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+            </nav>
+            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
+                <span class="m-1">Saldo final</span>
+                <p class="m-1">R$ <strong>{{formatarNumero(saldo)}}</strong></p>
+            </section>
+            <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 8px;">
+                <thead class="bg-gradient text-white">
+                    <th>Dia</th>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                </thead>
+                <tbody>
+                    <tr v-bind:id="lacamento.id" @click="selecionaTr" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
+                        <td style="width: 40px;">{{lacamento.dia}}</td>
+                        <td>{{lacamento.descricao}}</td>
+                        <td style="width: 40px;">{{lacamento.tipo}}</td>
+                        <td>{{formatarNumero(lacamento.valor)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- adicionar lançamentos extrato-->
+            <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
+                <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
+                    <button @click="footerShow" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                          </svg>
+                    </button>
+                    <button 
+                        @click="addLancamento"
+                        v-show="showFooter" 
+                        class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <button
+                    @click="footerClose"
+                    v-show="showFooter" 
+                    class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+                
+                <h4 class="m-1">Adicionar</h4>
+                <p>
+                    <button style="width: 50px;" class="p-2" @click="decrementarDia">-</button>
+                    Dia
+                    <input v-model="dia" type="number" style="width: 50px;" maxlength="2">
+                    <button style="width: 50px;" class="p-2" @click="incrementarDia">+</button>
+                </p>
+                <p>
+                    Descrição
+                    <input id="descricao" v-model="descricao" type="text">
+                </p>
+                <p>
+                    Valor
+                    <input id="valor" v-model="valor" type="text">
+                </p>
+                <p class="flex gap-5" style="margin-bottom: 6px;">
+                    <label for="credito">
+                        <input id="credito" type="radio" value="c" name="tipo" v-model="tipo">
+                        Crédito
+                    </label>
+                    <label for="debito">
+                        <input id="debito" type="radio" value="d" name="tipo" v-model="tipo">
+                        Débito
+                    </label>
+                </p>
+            </footer>
+            <!-- Modal para editar lançamento -->
+            <div id="modalExtrato" v-show="showModalExtrato" class="fixed w-full top-0 left-0 bg-black4 h-full flex justify-center items-center z-50">
+                <div class="flex flex-col items-center gap-2 p-2 border border-black border-solid bg-gradient rounded"
                 style="width: 300px;"
             >
                 <h4 class="text-center">Alterar/Excluir</h4>
                 <p class="flex gap-2 justify-center items-center">
-                    <button class="flex items-center justify-center p-2 border-black rounded bg-transparent" style="width: 50px;" class="p-2" @click="decrementarDia">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                    <button class="flex items-center justify-center p-2 border-white rounded bg-transparent" style="width: 50px;" class="p-2" @click="decrementarDia">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-dash-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
-                          </svg>
+                        </svg>
                     </button>
                     Dia
                     <input v-model="dia" class="p-1" type="number" style="width: 50px;" maxlength="2">
-                    <button class="flex items-center justify-center p-2 border-black rounded bg-transparent" style="width: 50px;" class="p-2" @click="incrementarDia">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <button class="flex items-center justify-center p-2 border-white rounded bg-transparent" style="width: 50px;" class="p-2" @click="incrementarDia">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                          </svg>
+                        </svg>
                     </button>
                 </p>
                 <p>
@@ -159,6 +161,59 @@
                     <button @click="cancelarAlteracao" class="p-2">Cancelar</button>
                 </div>
             </div>
+        </div>
+        </div>
+        <div v-if="showAplicacao" class="flex flex-col justify-stretch items-center">
+            <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido"><div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
+                
+                <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                      </svg>
+                </button>
+                <button 
+                    @click="addAplicacao"
+                    v-show="showFooterAplicacao" 
+                    class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                    </svg>
+                </button>
+            </div>
+                <button
+                    @click="showFooterAplicacao = false"
+                    v-show="showFooterAplicacao" 
+                    class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+                <h4 class="text-center m-2">Adicionar</h4>
+                <p>
+                    Nome
+                    <input type="text" id="nomeAplicacao" v-model="nomeAplicacao">
+                </p>
+                <p>
+                    Características
+                    <input type="text" id="descricaoAplicacao" v-model="descricaoAplicacao">
+                </p>
+                <p style="margin-bottom: 20px;">
+                    Valor
+                    <input type="text" id="valorAplicacao" v-model="valorAplicacao">
+                </p>
+            </footer>
+            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
+                <span class="m-1">Total Aplicado</span>
+                <p class="m-1">R$ <strong>{{formatarNumero(totalAplicados)}}</strong></p>
+            </section>
+            <ul class="m-2 w-90 flex flex-col gap-5">
+                <li v-for="aplicacao in aplicacoes" class="p-2 b-shadown-y2 rounded text-xl text-center">
+                    <strong>{{aplicacao.nome}}</strong>  <br>
+                    Característica : {{aplicacao.descricao}} <br>
+                    Valor : R$ {{formatarNumero(aplicacao.valor)}}
+                </li>
+            </ul>
         </div>
     </div>
     <script src="js/index.js"></script>
