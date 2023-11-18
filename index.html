@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="./js/vue.min.js"></script>
     <title>CoinControl</title>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
 </head>
 <body>
     <div id="app">
