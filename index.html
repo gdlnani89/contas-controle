@@ -44,7 +44,7 @@
                         <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
                 </button>
-                <div class="m-2 flex flex-col justify-center items-center"> 
+                <div class="m-2 flex flex-col justify-center items-center text-xl"> 
                     <p class="capitalize font-bold">{{mesString[mesIndice]}}</p>
                     <p>{{ano}}</p>
                 </div>
@@ -54,20 +54,20 @@
                     </svg>
                 </button>
             </nav>
-            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded" style="margin-top: 10px;">
+            <section class="flex justify-between m-auto w-90 b-shadown-y2 p-1 rounded text-xl" style="margin-top: 10px;">
                 <span class="m-1">Saldo final</span>
                 <p class="m-1">R$ <strong>{{formatarNumero(saldo)}}</strong></p>
             </section>
-            <table v-show="showTabela" class="m-auto w-90 b-shadown-y2" style="margin-top: 8px;">
-                <thead class="bg-gradient text-white">
-                    <th>Dia</th>
+            <table v-show="showTabela" class="m-auto w-90 b-shadown-y2 rounded text-xl" style="margin-top: 8px;">
+                <thead class="bg-gradient text-white p-2">
+                    <th style="padding: 10px 0;">Dia</th>
                     <th>Descrição</th>
                     <th>Tipo</th>
                     <th>Valor</th>
                 </thead>
                 <tbody>
                     <tr v-bind:id="lacamento.id" @click="selecionaTr" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
-                        <td style="width: 40px;">{{lacamento.dia}}</td>
+                        <td style="width: 40px; padding: 10px 0;">{{lacamento.dia}}</td>
                         <td>{{lacamento.descricao}}</td>
                         <td style="width: 40px;">{{lacamento.tipo}}</td>
                         <td>{{formatarNumero(lacamento.valor)}}</td>
