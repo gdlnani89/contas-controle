@@ -1,5 +1,166 @@
 const dataAtual = new Date()
 
+function gerarId(){        
+    let resultado = ''
+    const caracteres = 'abcde0123456789'
+    for(let i = 0; i < 5; i++){
+        resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length))
+    }
+
+    return resultado
+}
+function atualizaLs(item,array){
+    if(item === 'coincontrol')localStorage.setItem(item, JSON.stringify(array))
+    if(item === 'aplicacoes')localStorage.setItem(item, JSON.stringify(array))
+    if(item === 'emprestimos')localStorage.setItem(item, JSON.stringify(array))
+}
+function formatarDataParaString(data) {
+    const [ano,mes,dia] = data.split('-')
+
+    return `${dia}/${mes}/${ano}`;
+}
+
+Vue.component('emprestimo-secao',{
+    data : function(){
+        return {
+            emprestimos : [],
+            idEmprestimo : '',
+            nomeEmprestimo : '',
+            valorEmprestimo : '',
+            prazoEmprestimo : '',
+            dataContratacao : '',
+            taxaEmprestimo : '',
+            showFooter : false
+        }
+    },
+    methods : {
+        lancamento(){
+            const id = gerarId()
+
+            return {
+                id,
+                nome : this.nomeEmprestimo,
+                valor : this.valorEmprestimo,
+                prazo : this.prazoEmprestimo,
+                taxa : this.taxaEmprestimo,
+                data : this.dataContratacao
+            }
+        },
+        addLancamento(){
+            console.log('click')
+            if(!this.nomeEmprestimo){
+                document.getElementById('nomeEmprestimo').focus()
+                return
+            }
+            if(!this.valorEmprestimo){
+                document.getElementById('valorEmprestimo').focus()
+                return
+            }
+            if(!this.prazoEmprestimo){
+                document.getElementById('prazoEmprestimo').focus()
+                return
+            }
+            const dado = this.lancamento()
+            this.emprestimos.push(dado)
+            atualizaLs('emprestimos', this.emprestimos)
+            this.nomeEmprestimo = ''
+            this.valorEmprestimo = ''
+            this.prazoEmprestimo = ''
+            this.taxaEmprestimo = ''
+            this.dataContratacao = ''
+        },
+        verificaDigitado(e){
+            let inputValue = e.target.value
+
+            inputValue = inputValue.replace(/[^0-9,]/g, '');
+            console.log(inputValue);
+            e.target.value = inputValue
+        },
+        excluiLancamento(e){
+            const target = e.target.parentElement.parentElement
+            const id = target.getAttribute('id')
+            this.idEmprestimo = id
+            const novaLista = 
+                this.emprestimos.filter(item => item.id !== this.idEmprestimo)
+            this.emprestimos = novaLista
+            atualizaLs('emprestimos', novaLista)
+        }
+
+    },
+    template : `
+    <div>
+    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
+        <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
+            <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </button>
+            <button 
+                @click="addLancamento"
+                v-show="showFooter" 
+                class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                </svg>
+            </button>
+        </div>
+        <button
+            @click="showFooter = false"
+            v-show="showFooter" 
+            class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </button>
+        <h4 class="text-center m-2">Adicionar</h4>
+        <p>
+            Nome
+            <input type="text" id="nomeEmprestimo" v-model="nomeEmprestimo">
+        </p>
+        <p>
+            Valor
+            <input @input="verificaDigitado" type="text" id="valorEmprestimo" v-model="valorEmprestimo">
+        </p>
+        <p>
+            Prazo
+            <input type="number" id="prazoEmprestimo" v-model="prazoEmprestimo">
+        </p>
+        <p>
+            Taxa
+            <input @input="verificaDigitado" type="text" id="taxaEmprestimo" v-model="taxaEmprestimo">
+        </p>
+        <p style="margin-bottom: 8px;">
+            Data aplicação
+            <input type="date" name="" id="" v-model="dataContratacao">
+        </p>
+    </footer>
+        <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
+        <ul class="m-2 w-90 flex flex-col gap-5">
+        <li
+            v-bind:id="emprestimo.id"
+            v-for="emprestimo in emprestimos" 
+            class="p-2 b-shadown-y2 rounded text-xl text-center relative">
+            <strong>{{emprestimo.nome}}</strong>  <br>
+            Valor : R$ {{emprestimo.valor}} <br>
+            Prazo : {{emprestimo.prazo}} <br>
+            Taxa : {{emprestimo.taxa}}% <br>
+            Data da contratação : {{emprestimo.data ? formatarDataParaString(emprestimo.data) : '--/--/--'}}
+            <div class="absolute right-0 top-0 flex flex-col">
+                <button @click="excluiLancamento" 
+                    class="border-none bg-transparent cursor-pointer m-1 trash">
+                </button>
+            </div>
+        </li>
+        </ul>    
+    </div> 
+    `,
+    mounted(){
+        this.emprestimos = JSON.parse(localStorage.getItem('emprestimos')) || []
+    }
+})
+
 new Vue({
     el: "#app",
     data : {
@@ -42,7 +203,8 @@ new Vue({
         descricaoAplicacao : '',
         valorAplicacao : '',
         totalAplicados : '0,00',
-        dataAplicacao : ''
+        dataAplicacao : '',
+        showEmprestimo : false,
     },
     methods : {
         formatarNumero(numero){
@@ -119,6 +281,7 @@ new Vue({
         atualizaLs(item){
             if(item === 'coincontrol')localStorage.setItem(item, JSON.stringify(this.contas))
             if(item === 'aplicacoes')localStorage.setItem(item, JSON.stringify(this.aplicacoes))
+            if(item === 'emprestimos')localStorage.setItem(item, JSON.stringify(this.emprestimos))
         },
         addLancamento(){
             if(!this.descricao){
@@ -251,6 +414,7 @@ new Vue({
             this.btnHeader = innerTextBtn
             this.btnHeader !== 'Extrato' ? this.showExtrato = false : this.showExtrato = true
             this.btnHeader === 'Aplicações' ? this.showAplicacao = true : this.showAplicacao = false
+            this.btnHeader === 'Empréstimos' ? this.showEmprestimo = true : this.showEmprestimo = false
             this.showMenu = false
         },
         excluirElemento(){

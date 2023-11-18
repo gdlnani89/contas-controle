@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Croissant+One&family=Roboto&display=swap" rel="stylesheet">
@@ -174,21 +175,20 @@
         <div v-if="showAplicacao" class="flex flex-col justify-stretch items-center">
             <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
                 <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
-                
-                <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                </button>
-                <button 
-                    @click="addAplicacao"
-                    v-show="showFooterAplicacao" 
-                    class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
-                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                    </svg>
-                </button>
-            </div>
+                    <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    <button 
+                        @click="addAplicacao"
+                        v-show="showFooterAplicacao" 
+                        class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                        </svg>
+                    </button>
+                </div>
                 <button
                     @click="showFooterAplicacao = false"
                     v-show="showFooterAplicacao" 
@@ -228,7 +228,7 @@
                     <strong>{{aplicacao.nome}}</strong>  <br>
                     Característica : {{aplicacao.descricao}}<br>
                     Valor : R$ {{formatarNumero(aplicacao.valor)}} <br>
-                    Data da aplicação : {{formatarDataParaString(aplicacao.data) || 'Sem data cadastrada'}}
+                    Data da aplicação : {{aplicacao.data ? formatarDataParaString(aplicacao.data) : '--/--/--'}}
                     <div class="absolute right-0 top-0 flex flex-col">
                         <button @click="deletarAplicacao" 
                             class="border-none bg-transparent cursor-pointer m-1 trash">
@@ -236,6 +236,10 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <div v-if="showEmprestimo">
+            <!-- <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4> -->
+            <emprestimo-secao></emprestimo-secao>
         </div>
     </div>
     <script src="js/index.js"></script>
