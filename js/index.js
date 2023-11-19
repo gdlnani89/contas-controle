@@ -480,7 +480,7 @@ new Vue({
                 }
             })
             try {
-                fetch('https://api.invertexto.com/v1/holidays/2023')
+                fetch(`https://api.invertexto.com/v1/holidays/${this.ano}?token=5474|bFqL4xrZghHzvJe4qpOQPokZS6SeOtrp`)
                     .then(resp => {
                         if (!resp.ok) {
                             throw new Error(`Erro na requisição: ${resp.status}`);
