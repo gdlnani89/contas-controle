@@ -205,6 +205,8 @@ new Vue({
         totalAplicados : '0,00',
         dataAplicacao : '',
         showEmprestimo : false,
+        cdi : '',
+        historicoCdi : []
     },
     methods : {
         formatarNumero(numero){
@@ -441,6 +443,24 @@ new Vue({
             const [ano,mes,dia] = data.split('-')
 
             return `${dia}/${mes}/${ano}`;
+        },
+        calculaAplicacaoCdi(cdi, percentual = 100,valor){
+            let i = cdi/percentual
+            let rendimento = i*valor
+            let valorAtualizado = valor + rendimento
+            return valorAtualizado
+        },
+        calculaDesdeAplicacao(aplicacao, percentual){
+            const [ano,mes,dia] = aplicacao.data.split('-')
+            // const [ano,mes,dia] = this.aplicacoes[0].data.split('-')
+            const dataAplicacao = `${dia}/${mes}/${ano}`
+            let indiceSeleciona
+            this.historicoCdi.forEach((item,indice) => {if(item.data == dataAplicacao)indiceSeleciona = indice})
+            let periodoArray = this.historicoCdi.slice(indiceSeleciona)
+            let valorIncial = parseFloat(aplicacao.valor.replace(',','.'))
+            periodoArray.forEach(item => valorIncial = this.calculaAplicacaoCdi(item.valor,percentual,valorIncial))
+            
+            return valorIncial.toFixed(2).replace('.',',')
         }
     },
     mounted(){
@@ -448,5 +468,13 @@ new Vue({
         this.contas = JSON.parse(localStorage.getItem('coincontrol')) || []
         this.atualizaConta()
         this.atualizaAplicacoes()
+        fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados?formato=json')
+            .then(resp => resp.json())
+            .then(resp => {
+                if(resp.length > 0){
+                    this.historicoCdi = resp
+                    this.cdi = resp[resp.length-1]
+                }
+            })
     }
 })
