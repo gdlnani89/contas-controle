@@ -77,6 +77,7 @@
                     </tr>
                 </tbody>
             </table>
+            <p>{{feriados}}</p>
             <!-- adicionar lançamentos extrato-->
             <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
                 <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
@@ -230,7 +231,8 @@
                     Característica : {{aplicacao.descricao}}<br>
                     Valor Incial : R$ {{formatarNumero(aplicacao.valor)}} <br>
                     Data da aplicação : {{aplicacao.data ? formatarDataParaString(aplicacao.data) : '--/--/--'}} <br>
-                    <p v-if="aplicacao.nome.toLowerCase() == 'lci'">
+                    <!-- <p v-if="aplicacao.nome.toLowerCase() == 'lci'"> -->
+                    <p v-if="aplicacao.nome.toLowerCase().includes('lci')">
                         Valor Atual : R$ {{formatarNumero(calculaDesdeAplicacao(aplicacao, parseInt(aplicacao.descricao)))}}
                     </p> 
                     <div class="absolute right-0 top-0 flex flex-col">

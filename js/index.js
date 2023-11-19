@@ -206,7 +206,8 @@ new Vue({
         dataAplicacao : '',
         showEmprestimo : false,
         cdi : '',
-        historicoCdi : []
+        historicoCdi : [],
+        feriados : []
     },
     methods : {
         formatarNumero(numero){
@@ -455,7 +456,9 @@ new Vue({
             // const [ano,mes,dia] = this.aplicacoes[0].data.split('-')
             const dataAplicacao = `${dia}/${mes}/${ano}`
             let indiceSeleciona
-            this.historicoCdi.forEach((item,indice) => {if(item.data == dataAplicacao)indiceSeleciona = indice})
+            this.historicoCdi.forEach((item,indice) => {
+                if(item.data == dataAplicacao)indiceSeleciona = indice 
+            })
             let periodoArray = this.historicoCdi.slice(indiceSeleciona)
             let valorIncial = parseFloat(aplicacao.valor.replace(',','.'))
             periodoArray.forEach(item => valorIncial = this.calculaAplicacaoCdi(item.valor,percentual,valorIncial))
@@ -476,5 +479,24 @@ new Vue({
                     this.cdi = resp[resp.length-1]
                 }
             })
+            try {
+                fetch('https://api.invertexto.com/v1/holidays/2023')
+                    .then(resp => {
+                        if (!resp.ok) {
+                            throw new Error(`Erro na requisição: ${resp.status}`);
+                        }
+                        return resp.json();
+                    })
+                    .then(data => {
+                        this.feriados = data
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+            
     }
 })
