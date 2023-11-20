@@ -23,21 +23,6 @@
     <div id="app">
         <header class="flex justify-between items-center bg-gradient p-2">
             <h1 class="text-lg text-white font-sans">CoinControl</h1>
-            <!-- <nav class="relative">
-                <button @click="showMenu = !showMenu" class="flex justify-center items-center px-2 cursor-pointer border-none bg-transparent text-lg text-yellow font-sans">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-caret-down-fill m-2" viewBox="0 0 16 16">
-                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                    </svg>
-                    {{btnHeader}}
-                </button>
-                <ul id="ulmenu" v-show="showMenu" class="flex flex-col absolute right-0 z-50 bg-white rounded b-shadown-y text-center font-sans top-37">
-                    <li><button @click.stop="selecionaBtnHeader">Extrato</button></li>
-                    <li><button @click.stop="selecionaBtnHeader">Aplicações</button></li>
-                    <li><button @click.stop="selecionaBtnHeader">Empréstimos</button></li>
-                    <li><button @click.stop="selecionaBtnHeader">Patrimonio</button></li>
-                    <li><button @click.stop="selecionaBtnHeader">Totais</button></li>
-                </ul>
-            </nav> -->
         </header>
         <div v-if="showExtrato">
             <nav v-show="true" class="flex justify-around" style="margin-top: 8px;">
@@ -60,22 +45,24 @@
                 <span class="m-1">Saldo final</span>
                 <p class="m-1">R$ <strong>{{formatarNumero(saldo)}}</strong></p>
             </section>
-            <table v-show="showTabela" class="m-auto w-90 b-shadown-y2 rounded text-xl" style="margin-top: 8px;">
-                <thead class="bg-gradient text-white p-2">
-                    <th style="padding: 10px 0;">Dia</th>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                </thead>
-                <tbody>
-                    <tr v-bind:id="lacamento.id" @click="selecionaTr" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
-                        <td style="width: 40px; padding: 10px 0;">{{lacamento.dia}}</td>
-                        <td>{{lacamento.descricao}}</td>
-                        <td style="width: 40px;">{{lacamento.tipo}}</td>
-                        <td>{{formatarNumero(lacamento.valor)}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tabela-container">
+                <table v-show="showTabela" class="m-auto w-90 b-shadown-y2 rounded text-xl" style="margin-top: 8px;">
+                    <thead class="bg-gradient text-white p-2">
+                        <th style="padding: 10px 0;">Dia</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                    </thead>
+                    <tbody>
+                        <tr v-bind:id="lacamento.id" @click="selecionaTr" class="text-center" v-for="(lacamento,index) in contaSelecionada" :key="index" :class="{ 'odd-row': index % 2 !== 0 }">
+                            <td style="width: 40px; padding: 10px 0;">{{lacamento.dia}}</td>
+                            <td>{{lacamento.descricao}}</td>
+                            <td style="width: 40px;">{{lacamento.tipo}}</td>
+                            <td>{{formatarNumero(lacamento.valor)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- adicionar lançamentos extrato-->
             <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondido">
                 <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
@@ -174,7 +161,7 @@
         </div>
         <div v-if="showAplicacao" class="flex flex-col justify-stretch items-center">
             <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
-                <div :class="{topBtn: !showFooterAplicacao}" class="absolute right-0 top-n">
+                <div :class="{topBtnApl: !showFooterAplicacao}" class="absolute right-0 top-n">
                     <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>

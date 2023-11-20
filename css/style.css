@@ -4,6 +4,10 @@
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     box-sizing: border-box;
 }
+.tabela-container {
+    max-height: 72vh;
+    overflow-y: auto;
+}
 button.b-shadown-y2:active{
     box-shadow: none;
 }
@@ -108,6 +112,12 @@ table{
 }
 .topBtn{
     top: -130px;
+}
+.topBtnApl{
+    top: -132px;
+}
+.topBtnEmp{
+    top: -136px;
 }
 .top-37{
     top: 37px;

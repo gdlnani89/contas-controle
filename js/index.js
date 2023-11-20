@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', function() {
+    var tabelaContainer = document.querySelector('.tabela-container');
+    var thead = document.querySelector('thead');
+
+    tabelaContainer.addEventListener('scroll', function() {
+        thead.style.transform = 'translateY(' + tabelaContainer.scrollTop + 'px)';
+    });
+});
+
 const dataAtual = new Date()
 
 function gerarId(){        
@@ -97,7 +106,7 @@ Vue.component('emprestimo-secao',{
     template : `
     <div>
     <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp">
-        <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
+        <div :class="{topBtnEmp: !showFooter}" class="absolute right-0 top-n">
             <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
