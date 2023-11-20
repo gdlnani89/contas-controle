@@ -77,6 +77,9 @@ table{
 .b-shadown-y2{
     box-shadow: 1px 2px 7px 2px rgb(0 0 0 / 24%);
 }
+.f-shadow{
+    box-shadow: 0px 5px 7px 7px rgba(0,0,0,0.68);
+}
 /* overflow */
 .overflow-auto	{overflow: auto;}
 .overflow-hidden	{overflow: hidden;}
@@ -101,10 +104,10 @@ table{
 .sticky	{position: sticky;}
 /* Top / Right / Bottom / Left */
 .top-n{
-    top: -55px;
+    top: -60px;
 }
 .topBtn{
-    top: -65px;
+    top: -125px;
 }
 .top-37{
     top: 37px;
@@ -346,7 +349,15 @@ table tbody tr:active{
 .f-escondidoAp{
     bottom : -235px;
 }
+.f-escondidoEmp{
+    bottom : -285px;
+}
 .cfooterShow{
-    bottom : 0;
+    bottom : 60px;
     transition: bottom .2s ease-in-out;
+    padding-bottom: 20px;
+}
+.menuAtivo{
+    color: white;
+    font-weight: bold;
 }

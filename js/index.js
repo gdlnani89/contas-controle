@@ -20,6 +20,12 @@ function formatarDataParaString(data) {
 
     return `${dia}/${mes}/${ano}`;
 }
+function maskNumber(numero){
+    let [parteInteira, parteDecimal] = numero.split(',')
+    parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    parteDecimal = parteDecimal ? ',' + parteDecimal.padEnd(2, '0') : ',00';
+    return parteInteira + parteDecimal;
+}
 
 Vue.component('emprestimo-secao',{
     data : function(){
@@ -90,7 +96,7 @@ Vue.component('emprestimo-secao',{
     },
     template : `
     <div>
-    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
+    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp">
         <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
             <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
@@ -126,28 +132,36 @@ Vue.component('emprestimo-secao',{
         </p>
         <p>
             Prazo
-            <input type="number" id="prazoEmprestimo" v-model="prazoEmprestimo">
+            <input type="number" id="prazoEmprestimo" v-model="prazoEmprestimo"
+            style="width: 80px;"
+            >
         </p>
         <p>
             Taxa
-            <input @input="verificaDigitado" type="text" id="taxaEmprestimo" v-model="taxaEmprestimo">
+            <input 
+                @input="verificaDigitado" 
+                type="text" 
+                id="taxaEmprestimo" 
+                v-model="taxaEmprestimo"
+                style="width: 50px;"
+            >
         </p>
         <p style="margin-bottom: 8px;">
-            Data aplicação
+            Data contratação
             <input type="date" name="" id="" v-model="dataContratacao">
         </p>
     </footer>
         <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
-        <ul class="m-2 w-90 flex flex-col gap-5">
+        <ul class="m-2 w-90 flex flex-col items-center gap-5">
         <li
             v-bind:id="emprestimo.id"
             v-for="emprestimo in emprestimos" 
-            class="p-2 b-shadown-y2 rounded text-xl text-center relative">
+            class="p-2 b-shadown-y2 rounded text-xl text-center relative w-full">
             <strong>{{emprestimo.nome}}</strong>  <br>
-            Valor : R$ {{emprestimo.valor}} <br>
+            Valor : R$ {{maskNumber(emprestimo.valor)}} <br>
             Prazo : {{emprestimo.prazo}} <br>
             Taxa : {{emprestimo.taxa}}% <br>
-            Data da contratação : {{emprestimo.data ? formatarDataParaString(emprestimo.data) : '--/--/--'}}
+            Data da contratação: {{emprestimo.data ? formatarDataParaString(emprestimo.data) : '--/--/--'}}
             <div class="absolute right-0 top-0 flex flex-col">
                 <button @click="excluiLancamento" 
                     class="border-none bg-transparent cursor-pointer m-1 trash">
@@ -211,6 +225,21 @@ new Vue({
         feriados : []
     },
     methods : {
+        menuBtnExtrato(){
+            this.showExtrato = true
+            this.showAplicacao = false
+            this.showEmprestimo = false
+        },
+        menuBtnAplicacao(){
+            this.showExtrato = false
+            this.showAplicacao = true
+            this.showEmprestimo = false
+        },
+        menuBtnEmprestimo(){
+            this.showExtrato = false
+            this.showAplicacao = false
+            this.showEmprestimo = true
+        },
         formatarNumero(numero){
             let [parteInteira, parteDecimal] = numero.split(',')
             parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -411,15 +440,6 @@ new Vue({
             this.aplicacoes = aplicacoesUpdate
             this.atualizaLs('aplicacoes')
             this.atualizaAplicacoes()
-        },
-        selecionaBtnHeader(e){
-            const target = e.target
-            const innerTextBtn = target.innerText
-            this.btnHeader = innerTextBtn
-            this.btnHeader !== 'Extrato' ? this.showExtrato = false : this.showExtrato = true
-            this.btnHeader === 'Aplicações' ? this.showAplicacao = true : this.showAplicacao = false
-            this.btnHeader === 'Empréstimos' ? this.showEmprestimo = true : this.showEmprestimo = false
-            this.showMenu = false
         },
         excluirElemento(){
             const novaLista = this.contas.filter(item => item.id !== this.id)
