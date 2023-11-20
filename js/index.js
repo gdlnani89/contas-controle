@@ -13,6 +13,7 @@ function atualizaLs(item,array){
     if(item === 'coincontrol')localStorage.setItem(item, JSON.stringify(array))
     if(item === 'aplicacoes')localStorage.setItem(item, JSON.stringify(array))
     if(item === 'emprestimos')localStorage.setItem(item, JSON.stringify(array))
+    if(item === 'feriados')localStorage.setItem(item, JSON.stringify(array))
 }
 function formatarDataParaString(data) {
     const [ano,mes,dia] = data.split('-')
@@ -452,6 +453,7 @@ new Vue({
             return valorAtualizado
         },
         calculaDesdeAplicacao(aplicacao, percentual){
+            
             const [ano,mes,dia] = aplicacao.data.split('-')
             // const [ano,mes,dia] = this.aplicacoes[0].data.split('-')
             const dataAplicacao = `${dia}/${mes}/${ano}`
@@ -469,6 +471,7 @@ new Vue({
     mounted(){
         this.mes = this.mesString[this.mesIndice]
         this.contas = JSON.parse(localStorage.getItem('coincontrol')) || []
+        this.feriados = JSON.parse(localStorage.getItem('feriados')) || []
         this.atualizaConta()
         this.atualizaAplicacoes()
         fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados?formato=json')
@@ -479,24 +482,24 @@ new Vue({
                     this.cdi = resp[resp.length-1]
                 }
             })
-            try {
-                fetch(`https://api.invertexto.com/v1/holidays/${this.ano}?token=5474|bFqL4xrZghHzvJe4qpOQPokZS6SeOtrp`)
-                    .then(resp => {
-                        if (!resp.ok) {
-                            throw new Error(`Erro na requisição: ${resp.status}`);
-                        }
-                        return resp.json();
-                    })
-                    .then(data => {
-                        this.feriados = data
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            } catch (error) {
-                console.error(error);
-            }
+        try {
+            fetch(`https://api.invertexto.com/v1/holidays/${this.ano}?token=5474|bFqL4xrZghHzvJe4qpOQPokZS6SeOtrp`)
+                .then(resp => {
+                    if (!resp.ok) {
+                        throw new Error(`Erro na requisição: ${resp.status}`);
+                    }
+                    return resp.json();
+                })
+                .then(data => {
+                    this.feriados = data
+                    atualizaLs('feriados', this.feriados)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } catch (error) {
+            console.error(error);
+        }
             
     }
 })
