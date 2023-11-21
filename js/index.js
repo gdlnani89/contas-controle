@@ -1,13 +1,35 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var tabelaContainer = document.querySelector('.tabela-container');
-    var thead = document.querySelector('thead');
-
-    tabelaContainer.addEventListener('scroll', function() {
-        thead.style.transform = 'translateY(' + tabelaContainer.scrollTop + 'px)';
-    });
-});
 
 const dataAtual = new Date()
+
+function calcParcela(principal,taxa,numParcelas){
+    let r = taxa / 100
+    let prestacao = principal * (r * Math.pow(1+r, numParcelas)) / ( Math.pow(1 + r, numParcelas)-1)
+
+    return prestacao.toFixed(2)
+}
+
+function gerarTabelaPrice(principal,taxa,numParcelas){
+    let tabela = []
+    let saldoDevedor = principal
+    let r = taxa / 100
+
+    for(let i = 1; i <= numParcelas ; i++){
+        let juros = saldoDevedor * r;
+        let amortizacao = calcParcela(principal,taxa,numParcelas) - juros;
+
+        saldoDevedor -= amortizacao
+
+        tabela.push({
+            periodo: i,
+            prestacao: calcParcela(principal,taxa,numParcelas).replace('.',','),
+            juros: juros.toFixed(2).replace('.',','),
+            amortizacao: amortizacao.toFixed(2).replace('.',','),
+            saldoDevedor: saldoDevedor.toFixed(2).replace('.',',')
+        })
+    }
+
+    return tabela
+}
 
 function gerarId(){        
     let resultado = ''
@@ -46,7 +68,9 @@ Vue.component('emprestimo-secao',{
             prazoEmprestimo : '',
             dataContratacao : '',
             taxaEmprestimo : '',
-            showFooter : false
+            showFooter : false,
+            tabelaPrice : [],
+            showTabela : false
         }
     },
     methods : {
@@ -100,12 +124,28 @@ Vue.component('emprestimo-secao',{
                 this.emprestimos.filter(item => item.id !== this.idEmprestimo)
             this.emprestimos = novaLista
             atualizaLs('emprestimos', novaLista)
+        },
+        tabelaPriceGera(e){
+            const target = e.target.parentElement.parentElement
+            const id = target.getAttribute('id')
+            this.idEmprestimo = id
+            this.emprestimos.forEach(item =>{
+                if(item.id == id){
+                    this.nomeEmprestimo = item.nome
+                    this.valorEmprestimo = parseFloat(item.valor.replace(',','.'))
+                    this.taxaEmprestimo = parseFloat(item.taxa.replace(',','.'))
+                    this.prazoEmprestimo = parseInt(item.prazo)
+                    this.dataContratacao = item.data
+                }
+            })
+            const tabela = gerarTabelaPrice(this.valorEmprestimo,this.taxaEmprestimo,this.prazoEmprestimo)
+            this.tabelaPrice = tabela
+            this.showTabela = true
         }
-
     },
     template : `
     <div>
-    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp">
+    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp z-50">
         <div :class="{topBtnEmp: !showFooter}" class="absolute right-0 top-n">
             <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
@@ -160,24 +200,57 @@ Vue.component('emprestimo-secao',{
             <input type="date" name="" id="" v-model="dataContratacao">
         </p>
     </footer>
-        <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
-        <ul class="m-2 w-90 flex flex-col items-center gap-5">
-        <li
-            v-bind:id="emprestimo.id"
-            v-for="emprestimo in emprestimos" 
-            class="p-2 b-shadown-y2 rounded text-xl text-center relative w-full">
-            <strong>{{emprestimo.nome}}</strong>  <br>
-            Valor : R$ {{maskNumber(emprestimo.valor)}} <br>
-            Prazo : {{emprestimo.prazo}} <br>
-            Taxa : {{emprestimo.taxa}}% <br>
-            Data da contratação: {{emprestimo.data ? formatarDataParaString(emprestimo.data) : '--/--/--'}}
-            <div class="absolute right-0 top-0 flex flex-col">
-                <button @click="excluiLancamento" 
-                    class="border-none bg-transparent cursor-pointer m-1 trash">
-                </button>
-            </div>
-        </li>
-        </ul>    
+        <h4 v-show="!showTabela" class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
+        <ul v-show="!showTabela" class="m-2 w-90 flex flex-col items-center gap-5">
+            <li
+                v-bind:id="emprestimo.id"
+                v-for="emprestimo in emprestimos" 
+                class="p-2 b-shadown-y2 rounded text-xl text-center relative w-full">
+                <strong>{{emprestimo.nome}}</strong>  <br>
+                Valor : R$ {{maskNumber(emprestimo.valor)}} <br>
+                Prazo : {{emprestimo.prazo}} <br>
+                Taxa : {{emprestimo.taxa}}% <br>
+                Data da contratação: {{emprestimo.data ? formatarDataParaString(emprestimo.data) : '--/--/--'}}
+                <div class="absolute right-0 top-0 flex flex-col">
+                    <button @click="excluiLancamento" 
+                        class="border-none bg-transparent cursor-pointer m-1 trash">
+                    </button>
+                    <button @click="tabelaPriceGera" 
+                        class="border-none bg-transparent cursor-pointer m-1 table">
+                    </button>
+                </div>
+            </li>
+        </ul>
+        <div class="relative" v-show="showTabela" style="padding-bottom: 75px">
+            <button @click="showTabela = false" 
+                class="absolute right-0 border-none bg-transparent"
+                style="margin-right: 10px"
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                </svg>
+            </button>
+            <h4 class="text-center" style="margin-bottom: 10px">Tabela {{nomeEmprestimo}}</h4>
+            <table class="w-90 m-auto text-center">
+                <thead>
+                    <th>Nº</th>
+                    <th>Prestação</th>
+                    <th>Juros</th>
+                    <th>Amortização</th>
+                    <th>Saldo Devedor</th>
+                </thead>
+                <tbody>
+                    <tr v-for="linha in tabelaPrice">
+                        <td>{{linha.periodo}}</td>
+                        <td>{{maskNumber(linha.prestacao)}}</td>
+                        <td>{{maskNumber(linha.juros)}}</td>
+                        <td>{{maskNumber(linha.amortizacao)}}</td>
+                        <td>{{maskNumber(linha.saldoDevedor)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
     </div> 
     `,
     mounted(){

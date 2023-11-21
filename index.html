@@ -21,10 +21,10 @@
 </head>
 <body>
     <div id="app">
-        <header class="flex justify-between items-center bg-gradient p-2">
+        <header class="fixed w-full top-0 flex justify-between items-center bg-gradient p-2 z-50">
             <h1 class="text-lg text-white font-sans">CoinControl</h1>
         </header>
-        <div v-if="showExtrato">
+        <div v-if="showExtrato" style="padding-top: 50px;">
             <nav v-show="true" class="flex justify-around" style="margin-top: 8px;">
                 <button class="p-1 bg-transparent border-none b-shadown-y2 rounded" @click="mesAnterior">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
@@ -159,7 +159,7 @@
             </div>
         </div>
         </div>
-        <div v-if="showAplicacao" class="flex flex-col justify-stretch items-center">
+        <div v-if="showAplicacao" style="padding-top: 50px;" class="flex flex-col justify-stretch items-center">
             <footer :class="{cfooterShow: showFooterAplicacao}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoAp">
                 <div :class="{topBtnApl: !showFooterAplicacao}" class="absolute right-0 top-n">
                     <button @click="showFooterAplicacao = true" v-show="!showFooterAplicacao" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
@@ -229,7 +229,7 @@
                 </li>
             </ul>
         </div>
-        <div v-if="showEmprestimo">
+        <div v-if="showEmprestimo" style="padding-top: 50px;">
             <!-- <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4> -->
             <emprestimo-secao></emprestimo-secao>
         </div>

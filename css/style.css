@@ -7,6 +7,8 @@
 .tabela-container {
     max-height: 70vh;
     overflow-y: auto;
+    padding-bottom: 10px;
+    margin-top: 5px;
 }
 button.b-shadown-y2:active{
     box-shadow: none;
@@ -18,6 +20,13 @@ button.b-shadown-y2:active{
     width: 26px;
     height: 26px;
     background-image: url('../icons/trash.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.table{
+    width: 26px;
+    height: 26px;
+    background-image: url('../icons/table.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
