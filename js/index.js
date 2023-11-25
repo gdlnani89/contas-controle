@@ -145,7 +145,7 @@ Vue.component('emprestimo-secao',{
     },
     template : `
     <div class="w-full">
-        <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp f-shadow">
+        <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp f-shadow z-10">
             <div :class="{topBtnEmp: !showFooter}" class="absolute right-0 top-n">
                 <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-white">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-plus" viewBox="0 0 16 16">
@@ -177,7 +177,7 @@ Vue.component('emprestimo-secao',{
             </p>
             <p>
                 Valor
-                <input @input="verificaDigitado" type="text" id="valorEmprestimo" v-model="valorEmprestimo">
+                <input type="number" id="valorEmprestimo" v-model="valorEmprestimo">
             </p>
             <p>
                 Prazo
@@ -187,8 +187,7 @@ Vue.component('emprestimo-secao',{
             </p>
             <p>
                 Taxa
-                <input 
-                    @input="verificaDigitado" 
+                <input  
                     type="text" 
                     id="taxaEmprestimo" 
                     v-model="taxaEmprestimo"
@@ -201,7 +200,13 @@ Vue.component('emprestimo-secao',{
             </p>
         </footer>
         <h4 v-show="!showTabela" class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
-        <ul v-show="!showTabela" class="flex flex-col items-center justify-center gap-5 w-full">
+        <ul v-show="!showTabela" 
+            class="flex flex-col items-center gap-5 w-full"
+            style="
+                overflow : auto;
+                height: 84vh;
+                padding-bottom: 10px;
+        ">
             <li
                 v-bind:id="emprestimo.id"
                 v-for="emprestimo in emprestimos" 

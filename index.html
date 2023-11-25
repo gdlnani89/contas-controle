@@ -66,7 +66,7 @@
                 </table>
             </div>
             <!-- adicionar lançamentos extrato-->
-            <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center f-escondido f-shadow">
+            <footer :class="{cfooterShow: showFooter}"  class="fixed w-full flex flex-col gap-2 justify-center items-center f-escondido f-shadow z-10">
                 <div :class="{topBtn: !showFooter}" class="absolute right-0 top-n">
                     <button @click="footerShow" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-plus" viewBox="0 0 16 16">
@@ -144,7 +144,7 @@
                 </p>
                 <p>
                     Valor
-                    <input v-model="valor" class="p-1" type="text" style="width: 125px;">
+                    <input v-model="valor" class="p-1" type="number" style="width: 125px;">
                 </p>
                 <p style="margin-bottom: 6px;">
                     Tipo
@@ -201,7 +201,7 @@
                 </p>
                 <p>
                     Valor
-                    <input type="text" id="valorAplicacao" v-model="valorAplicacao">
+                    <input type="number" id="valorAplicacao" v-model="valorAplicacao">
                 </p>
                 <p style="margin-bottom: 8px;">
                     Data aplicação
@@ -238,7 +238,7 @@
             <!-- <h4 class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4> -->
             <emprestimo-secao></emprestimo-secao>
         </div>
-        <footer class="w-full bg-gradient fixed bottom-0 p-2 f-shadow">
+        <footer class="w-full bg-gradient fixed bottom-0 p-2 f-shadow z-50">
             <nav>
                 <ul class="flex justify-between">
                     <li >
