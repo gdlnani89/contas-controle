@@ -144,68 +144,68 @@ Vue.component('emprestimo-secao',{
         }
     },
     template : `
-    <div>
-    <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp z-50">
-        <div :class="{topBtnEmp: !showFooter}" class="absolute right-0 top-n">
-            <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-            </button>
-            <button 
-                @click="addLancamento"
+    <div class="w-full">
+        <footer :class="{cfooterShow: showFooter}" class="fixed w-full flex flex-col gap-2 justify-center items-center bg-gradient f-escondidoEmp f-shadow">
+            <div :class="{topBtnEmp: !showFooter}" class="absolute right-0 top-n">
+                <button @click="showFooter = true" v-show="!showFooter" class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="black" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </button>
+                <button 
+                    @click="addLancamento"
+                    v-show="showFooter" 
+                    class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="blue" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                    </svg>
+                </button>
+            </div>
+            <button
+                @click="showFooter = false"
                 v-show="showFooter" 
-                class="mr-1 p-3 rounded-50 border-none flex items-center cursor-pointer btn-shadown bg-gradient">
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="yellow" class="bi bi-check-lg" viewBox="0 0 16 16">
-                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg>
             </button>
-        </div>
-        <button
-            @click="showFooter = false"
-            v-show="showFooter" 
-            class="rounded-50 border-none flex items-center cursor-pointer bg-transparent absolute top-0 left-0"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="white" class="bi bi-x" viewBox="0 0 16 16">
-            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-        </button>
-        <h4 class="text-center m-2">Adicionar</h4>
-        <p>
-            Nome
-            <input type="text" id="nomeEmprestimo" v-model="nomeEmprestimo">
-        </p>
-        <p>
-            Valor
-            <input @input="verificaDigitado" type="text" id="valorEmprestimo" v-model="valorEmprestimo">
-        </p>
-        <p>
-            Prazo
-            <input type="number" id="prazoEmprestimo" v-model="prazoEmprestimo"
-            style="width: 80px;"
-            >
-        </p>
-        <p>
-            Taxa
-            <input 
-                @input="verificaDigitado" 
-                type="text" 
-                id="taxaEmprestimo" 
-                v-model="taxaEmprestimo"
-                style="width: 50px;"
-            >
-        </p>
-        <p style="margin-bottom: 8px;">
-            Data contratação
-            <input type="date" name="" id="" v-model="dataContratacao">
-        </p>
-    </footer>
+            <h4 class="text-center m-2">Adicionar</h4>
+            <p>
+                Nome
+                <input type="text" id="nomeEmprestimo" v-model="nomeEmprestimo">
+            </p>
+            <p>
+                Valor
+                <input @input="verificaDigitado" type="text" id="valorEmprestimo" v-model="valorEmprestimo">
+            </p>
+            <p>
+                Prazo
+                <input type="number" id="prazoEmprestimo" v-model="prazoEmprestimo"
+                style="width: 80px;"
+                >
+            </p>
+            <p>
+                Taxa
+                <input 
+                    @input="verificaDigitado" 
+                    type="text" 
+                    id="taxaEmprestimo" 
+                    v-model="taxaEmprestimo"
+                    style="width: 50px;"
+                >
+            </p>
+            <p style="margin-bottom: 8px;">
+                Data contratação
+                <input type="date" name="" id="" v-model="dataContratacao">
+            </p>
+        </footer>
         <h4 v-show="!showTabela" class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
-        <ul v-show="!showTabela" class="m-2 w-90 flex flex-col items-center gap-5">
+        <ul v-show="!showTabela" class="flex flex-col items-center justify-center gap-5 w-full">
             <li
                 v-bind:id="emprestimo.id"
                 v-for="emprestimo in emprestimos" 
-                class="p-2 b-shadown-y2 rounded text-xl text-center relative w-full">
+                class="p-2 b-shadown-y2 rounded text-xl text-center relative bg-white w-90">
                 <strong>{{emprestimo.nome}}</strong>  <br>
                 Valor : R$ {{maskNumber(emprestimo.valor)}} <br>
                 Prazo : {{emprestimo.prazo}} <br>

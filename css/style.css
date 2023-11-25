@@ -14,7 +14,8 @@ button.b-shadown-y2:active{
     box-shadow: none;
 }
 .odd-row{
-    background-color: #00000018;
+    background-color: #00000083;
+    color: #fff;
 }
 .trash{
     width: 26px;
