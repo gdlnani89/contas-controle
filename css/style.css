@@ -382,3 +382,25 @@ table tbody tr:active{
     color: white;
     font-weight: bold;
 }
+.animaDesliza1{
+    animation: an1 0.3s ease;
+}
+.animaDesliza2{
+    animation: an2 0.3s ease;
+}
+@keyframes an1{
+    from{
+        transform: translateY(-100%);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+@keyframes an2{
+    from{
+        transform: translateY(100%);
+    }
+    to{
+        transform: translateY(0);
+    }
+}

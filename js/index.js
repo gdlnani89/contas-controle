@@ -199,9 +199,9 @@ Vue.component('emprestimo-secao',{
                 <input type="date" name="" id="" v-model="dataContratacao">
             </p>
         </footer>
-        <h4 v-show="!showTabela" class="text-center m-2 text-xl">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
+        <h4 v-show="!showTabela" class="text-center m-2 text-xl animaDesliza2">{{emprestimos.length ? 'Empréstimos cadastrados' : 'Sem empréstimos cadastrados'}}</h4>
         <ul v-show="!showTabela" 
-            class="flex flex-col items-center gap-5 w-full"
+            class="flex flex-col items-center gap-5 w-full animaDesliza2"
             style="
                 overflow : auto;
                 height: 84vh;
@@ -309,7 +309,7 @@ new Vue({
         showEmprestimo : false,
         cdi : '',
         historicoCdi : [],
-        feriados : []
+        feriados : [],
     },
     methods : {
         menuBtnExtrato(){
